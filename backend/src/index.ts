@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { apiLimiter } from './middlewares/rateLimit'
 dotenv.config();
 
 import { connect } from "./utils/connect";
@@ -14,8 +15,8 @@ app.use(cors());
 app.use(express.json());
 
 // Rutas
-app.use("/api/auth", authRouter);
-app.use("/api/tasks", taskRouter);
+app.use("/api/auth", apiLimiter, authRouter);
+app.use("/api/tasks", apiLimiter, taskRouter);
 
 app.listen(PORT, async () => {
   await connect();

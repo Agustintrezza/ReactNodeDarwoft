@@ -32,27 +32,6 @@ const createTask = async (req: Request, res: Response) => {
   }
 }
 
-const updateTask = async (req: Request, res: Response) => {
-  const { id } = req.params
-  const { text } = req.body
-
-  if (!text || !id) {
-    res.status(BAD_REQUEST).json({ success: false, message: "Data invalida" })
-    return
-  }
-
-  try {
-    const updated = await Task.findByIdAndUpdate(id, { text }, { new: true })
-    if (!updated) {
-      res.status(NOT_FOUND).json({ success: false, message: "Tarea no encontrada" })
-      return
-    }
-    res.status(OK).json({ success: true, message: "Actualizada", data: updated })
-  } catch (error: any) {
-    res.status(INTERNAL_SERVER_ERROR).json({ success: false, message: error.message })
-  }
-}
-
 const deleteTask = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
@@ -66,5 +45,31 @@ const deleteTask = async (req: Request, res: Response) => {
     res.status(INTERNAL_SERVER_ERROR).json({ success: false, message: error.message })
   }
 }
+
+const updateTask = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { text, status } = req.body;
+
+  if (!id) {
+    res.status(BAD_REQUEST).json({ success: false, message: "ID inválido" });
+    return;
+  }
+
+  const updatedFields: any = {};
+  if (text !== undefined) updatedFields.text = text;
+  if (status !== undefined) updatedFields.status = status;
+
+  try {
+    const updated = await Task.findByIdAndUpdate(id, updatedFields, { new: true });
+    if (!updated) {
+      res.status(NOT_FOUND).json({ success: false, message: "Tarea no encontrada" });
+      return;
+    }
+    res.status(OK).json({ success: true, message: "Actualizada", data: updated });
+  } catch (error: any) {
+    res.status(INTERNAL_SERVER_ERROR).json({ success: false, message: error.message });
+  }
+};
+
 
 export { getAllTasks, createTask, updateTask, deleteTask }

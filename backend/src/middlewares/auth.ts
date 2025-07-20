@@ -16,7 +16,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction): void =
   const token = authHeader?.split(" ")[1]
 
   if (!authHeader || !authHeader.startsWith("Bearer") || !token) {
-    res.json({ success: false, message: "No autorizado" })
+    res.status(401).json({ success: false, message: "No autorizado" })
     return
   }
 

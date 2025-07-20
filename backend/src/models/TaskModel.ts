@@ -2,7 +2,11 @@ import { Schema, model } from "mongoose"
 
 const taskSchema = new Schema({
   text: { type: String, required: true },
-  completed: { type: Boolean, default: false },
+  status: {
+    type: String,
+    enum: ['pendiente', 'hecha'],
+    default: 'pendiente',
+  },
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
 }, { versionKey: false, timestamps: true })
 

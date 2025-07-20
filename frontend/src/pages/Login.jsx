@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import Navbar from "../components/Navbar";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,13 +28,36 @@ const Login = () => {
           email: res.data.email || email,
           token: res.data.token,
         });
+
+        await Swal.fire({
+          title: "¡Bienvenido!",
+          text: "Inicio de sesión exitoso",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Ir al panel",
+          background: "#1e293b",
+          color: "#fff",
+        });
+
         navigate("/dashboard");
       } else {
-        alert("Error: respuesta inválida del servidor.");
+        Swal.fire({
+          title: "Error",
+          text: "Respuesta inválida del servidor.",
+          icon: "error",
+          background: "#1e293b",
+          color: "#fff",
+        });
       }
     } catch (err) {
       console.error("Error al iniciar sesión:", err);
-      alert("Error al iniciar sesión");
+      Swal.fire({
+        title: "Error al iniciar sesión",
+        text: "Verificá tus datos o intentá más tarde.",
+        icon: "error",
+        background: "#1e293b",
+        color: "#fff",
+      });
     }
   };
 
@@ -46,8 +70,7 @@ const Login = () => {
           className="bg-slate-800 p-8 mb-20 rounded shadow-md w-full max-w-md"
         >
           <h2 className="text-2xl font-bold mb-6 text-center">
-            Iniciar Sesión{" "}
-            <span className="ms-3 text-4xl inline-block">🔐</span>
+            Iniciar Sesión <span className="ms-3 text-4xl inline-block">🔐</span>
           </h2>
           <input
             type="email"

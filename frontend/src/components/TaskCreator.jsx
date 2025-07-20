@@ -19,10 +19,6 @@ const TaskCreator = ({ onCreate }) => {
     }
   };
 
-  const handleClear = () => {
-    setNewTask("");
-  };
-
   const handleVoiceToggle = () => {
     if (!recognitionRef.current) {
       const SpeechRecognition =
@@ -77,7 +73,12 @@ const TaskCreator = ({ onCreate }) => {
         <div className="flex w-full md:w-auto justify-between gap-2">
           <button
             onClick={handleSubmit}
-            className="w-1/3 md:w-auto bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
+            disabled={!newTask.trim()}
+            className={`w-1/3 md:w-auto px-4 py-2 rounded ${
+              !newTask.trim()
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             Crear
           </button>
@@ -93,8 +94,13 @@ const TaskCreator = ({ onCreate }) => {
             <FiMic size={18} className="mx-auto" />
           </button>
           <button
-            onClick={handleClear}
-            className="w-1/3 md:w-auto bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            onClick={() => setNewTask("")}
+            disabled={!newTask.trim()}
+            className={`w-1/3 md:w-auto px-4 py-2 rounded ${
+              !newTask.trim()
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gray-600 hover:bg-gray-700"
+            }`}
             title="Limpiar input"
           >
             <FiXCircle size={18} className="mx-auto" />

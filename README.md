@@ -21,6 +21,8 @@ Espero les guste! Me gustó mucho armar el trabajo y la cursada estuvo excelente
 
 **Backend en Render:** https://reactnodedarwoft.onrender.com
 
+**La primera vez que se carga la aplicación es probable que el servidor demore un poco en responder hasta que 'despierta', luego ya responderá correctamente.**
+
 ## 🚀 PASOS PARA CORRER EL PROYECTO
 
 ## *(Descargar el repositorio)

@@ -29,15 +29,15 @@ const Login = () => {
           token: res.data.token,
         });
 
-        await Swal.fire({
-          title: "¡Bienvenido!",
-          text: "Inicio de sesión exitoso",
-          icon: "success",
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "Ir al panel",
-          background: "#1e293b",
-          color: "#fff",
-        });
+        // await Swal.fire({
+        //   title: "¡Bienvenido!",
+        //   text: "Iniciaste sesión correctamente",
+        //   icon: "success",
+        //   confirmButtonColor: "#3085d6",
+        //   confirmButtonText: "Ir al panel",
+        //   background: "#1e293b",
+        //   color: "#fff",
+        // });
 
         navigate("/dashboard");
       } else {
@@ -64,6 +64,7 @@ const Login = () => {
   return (
     <>
       <Navbar />
+      
       <div className="min-h-screen flex justify-center items-center bg-slate-900 text-white">
         <form
           onSubmit={handleSubmit}

@@ -66,7 +66,7 @@ const TaskCreator = ({ onCreate }) => {
           type="text"
           placeholder="Ingresá una tarea..."
           value={newTask}
-          onChange={(e) => setNewTask(capitalize(e.target.value))}
+          onChange={(e) => setNewTask(e.target.value)}
           className="w-full p-2 rounded bg-slate-700 text-white outline-none"
         />
 

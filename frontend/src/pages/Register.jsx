@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -20,14 +21,29 @@ const RegisterPage = () => {
       );
 
       if (res.data.success) {
-        alert("✅ Cuenta creada correctamente. Iniciá sesión.");
-        navigate("/login");
+        Swal.fire({
+          icon: "success",
+          title: "Cuenta creada",
+          text: "Tu cuenta fue creada correctamente 🎉",
+          confirmButtonText: "Iniciar sesión",
+          confirmButtonColor: "#2563eb",
+        }).then(() => {
+          navigate("/login");
+        });
       } else {
-        alert("No se pudo crear la cuenta: " + res.data.message);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: res.data.message || "No se pudo crear la cuenta",
+        });
       }
     } catch (error) {
       console.error("Error en el registro:", error);
-      alert("Error en el registro. Verificar los datos.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un problema al registrar. Verificá los datos.",
+      });
     }
   };
 

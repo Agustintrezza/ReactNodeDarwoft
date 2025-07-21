@@ -3,6 +3,7 @@ import TaskCreator from "../components/TaskCreator";
 import TaskList from "../components/TaskList";
 import EditTaskModal from "../components/EditTaskModal";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -100,29 +101,38 @@ const Dashboard = () => {
     }
   };
 
-  const handleEditTask = async (id, newTitle) => {
-    try {
-      await axios.patch(`${API_URL}/${id}`, { text: newTitle }, getAuthHeaders());
-      setEditModalOpen(false);
-      setTaskToEdit(null);
-      fetchTasks();
-      MySwal.fire({
-        ...darkSwalOptions,
-        icon: "success",
-        title: "Tarea actualizada",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    } catch (err) {
-      console.error("Error al editar tarea:", err);
-      MySwal.fire({
-        ...darkSwalOptions,
-        icon: "error",
-        title: "Error",
-        text: "No se pudo editar la tarea.",
-      });
-    }
-  };
+const capitalizeFirstLetter = (text) => {
+  const trimmed = text.trim();
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+};
+
+const handleEditTask = async (id, newTitle) => {
+  try {
+    const formattedTitle = capitalizeFirstLetter(newTitle);
+
+    await axios.patch(`${API_URL}/${id}`, { text: formattedTitle }, getAuthHeaders());
+
+    setEditModalOpen(false);
+    setTaskToEdit(null);
+    fetchTasks();
+
+    MySwal.fire({
+      ...darkSwalOptions,
+      icon: "success",
+      title: "Tarea actualizada",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  } catch (err) {
+    console.error("Error al editar tarea:", err);
+    MySwal.fire({
+      ...darkSwalOptions,
+      icon: "error",
+      title: "Error",
+      text: "No se pudo editar la tarea.",
+    });
+  }
+};
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
@@ -157,12 +167,12 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className="min-h-screen flex flex-col bg-slate-900 text-white">
       <Navbar />
-      <div className="p-6 mx-auto">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold mb-10">Panel Admin de Tareas ✅</h1>
-          <div className="flex gap-2 mb-4">
+      <div className="p-6 flex-grow">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-6">
+          <h1 className="text-3xl font-bold text-center md:text-start">Panel Admin de Tareas ✅</h1>
+          <div className="flex gap-2 justify-center md:justify-start">
             <button
               onClick={() => setFilter("todas")}
               className={`px-3 py-1 rounded border ${
@@ -219,6 +229,7 @@ const Dashboard = () => {
           />
         )}
       </div>
+      <Footer/>
     </div>
   );
 };

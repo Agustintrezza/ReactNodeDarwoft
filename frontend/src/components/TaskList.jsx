@@ -10,7 +10,7 @@ const TaskList = ({
 }) => {
   return (
     <div className="bg-slate-800 p-6 pt-5 rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-4">
+      <h2 className="text-xl font-semibold mb-3">
         Tareas {filter === "todas" && "actuales"}
         {filter === "pendiente" && "pendientes"}
         {filter === "hecha" && "hechas"}{" "}
